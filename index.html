@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>geow2: Geometry Wars: Retro Evolved 2 for Windows, macOS and Linux</title>
+<meta name="description" content="A native port of Geometry Wars: Retro Evolved 2 for Windows, macOS and Linux, rebuilt from the original executable. All six modes and local multiplayer. Needs your own copy of the Xbox Live Arcade game.">
+<meta name="theme-color" content="#03040b">
+<link rel="canonical" href="https://geow2.com/">
+<link rel="icon" href="img/favicon.ico" sizes="any">
+<link rel="icon" href="img/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geow2.com/">
+<meta property="og:title" content="geow2">
+<meta property="og:description" content="Geometry Wars: Retro Evolved 2, natively on Windows, macOS, Linux and Steam Deck. Unofficial; needs your own copy of the game.">
+<meta property="og:image" content="https://geow2.com/img/social.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="The geow2 icon, a glowing G2 on a warped blue grid, beside the name geow2">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/alpha-prota/AlphaProta-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/rijusans/Rijusans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<canvas id="grid" aria-hidden="true"></canvas>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <h1 class="wordmark">geow2</h1>
+      <p class="tagline">Geometry Wars: Retro Evolved 2, natively on Windows, macOS and Linux</p>
+      <p class="lede">A port of the 2008 Xbox Live Arcade game, rebuilt from reverse engineering of the original
+      executable. All six modes, the menus, local score boards and achievements, and multiplayer for up to four
+      players, at any resolution.</p>
+      <div class="download" id="download">
+        <a class="btn btn-primary" id="dl-primary" href="https://github.com/techknight/geow2/releases/latest">
+          <span class="btn-label" id="dl-label">Download</span>
+          <span class="readout" id="dl-meta">latest release</span>
+        </a>
+        <ul class="dl-others" id="dl-others">
+          <li><a href="https://github.com/techknight/geow2/releases/latest">Windows, macOS and Linux downloads</a></li>
+        </ul>
+      </div>
+      <p class="needs">Needs your own copy of the Xbox Live Arcade game. geow2 contains no game data.</p>
+    </div>
+    <figure class="hero-clip">
+      <video class="clip" muted loop playsinline preload="none" poster="media/evolved.webp" data-src="media/evolved.mp4"
+        aria-label="Evolved mode: the ship fighting a crowd of enemies on the glowing grid"></video>
+    </figure>
+  </div>
+</header>
+
+<main>
+  <section class="wrap section" id="setup" aria-labelledby="setup-h">
+    <h2 id="setup-h">Bring your own copy</h2>
+    <p class="section-lede">geow2 is only the program. The graphics, sound and text come from your own copy of
+    the game (title ID 584108FF, the <code>LIVE</code> package from an Xbox 360). A tool in the
+    download turns it into the data folder the game reads, once.</p>
+    <ol class="steps">
+      <li class="step">
+        <h3>Unpack the download</h3>
+        <p>Download the archive for your system and unpack it anywhere. Install
+        <a href="https://ffmpeg.org/download.html">FFmpeg</a> too: the tool uses it to decode the game's sound
+        (on a Mac, <code>brew install ffmpeg</code>).</p>
+      </li>
+      <li class="step">
+        <h3>Make the data folder</h3>
+        <p>In a terminal, in the folder you unpacked:</p>
+        <div class="cmd"><code id="cmd-unpack">geow2-extract unpack &lt;your package or extracted folder&gt; data</code><button type="button" class="copy" data-copy="cmd-unpack">Copy</button></div>
+        <div class="cmd"><code id="cmd-verify">geow2-extract verify data</code><button type="button" class="copy" data-copy="cmd-verify">Copy</button></div>
+        <p class="small">On macOS and Linux, write <code>./geow2-extract</code>. The tool accepts only the
+        release the port was made from and checks every file. The folder works on every system, so you can make
+        it once and copy it.</p>
+      </li>
+      <li class="step">
+        <h3>Play</h3>
+        <p>Start <code>geow2</code> (<code>geow2.exe</code> on Windows, <code>geow2.app</code> on macOS). A pad
+        works out of the box; so does the keyboard: WASD to move, arrow keys to fire, Space for a bomb.</p>
+      </li>
+    </ol>
+    <p class="more"><a href="https://github.com/techknight/geow2#getting-started">Full instructions in the README</a></p>
+  </section>
+
+  <section class="wrap section" id="modes" aria-labelledby="modes-h">
+    <h2 id="modes-h">Six ways to play</h2>
+    <p class="section-lede">Deadline is open from the start. Each of the others unlocks by playing the one before
+    it, in this order, as on the console.</p>
+
+    <article class="mode" id="deadline">
+      <figure class="mode-clip">
+        <video class="clip" muted loop playsinline preload="none" poster="media/deadline.webp" data-src="media/deadline.mp4"
+          aria-label="Deadline: the last seconds of a game, the grid lit orange and crowded with enemies"></video>
+      </figure>
+      <div class="mode-text">
+        <h3>Deadline</h3>
+        <p class="stats readout">3:00 <span>·</span> ships unlimited <span>·</span> 3 bombs</p>
+        <p>Three minutes to score as much as you can. You can't run out of ships: a hit clears the field and you
+        carry on. Collect the geoms that destroyed enemies drop to raise your multiplier, and use a bomb when it
+        gets crowded. Score earns more bombs, but bombed enemies give no points.</p>
+      </div>
+    </article>
+
+    <article class="mode" id="king">
+      <figure class="mode-clip">
+        <video class="clip" muted loop playsinline preload="none" poster="media/king.webp" data-src="media/king.mp4"
+          aria-label="King: three zones on the grid as the ship crosses open ground among snakes and other enemies"></video>
+      </figure>
+      <div class="mode-text">
+        <h3>King</h3>
+        <p class="stats readout">1 ship <span>·</span> no bombs <span>·</span> points x2</p>
+        <p>You can only fire from inside a zone, and enemies can't get in. Once you enter a zone it lasts three and
+        a half seconds, then shrinks away and a new one appears somewhere else, so you have to cross open ground to
+        reach it. Points and geoms are doubled, but a geom picked up inside a zone is lost. One hit ends the game.</p>
+      </div>
+    </article>
+
+    <article class="mode" id="evolved">
+      <figure class="mode-clip">
+        <video class="clip" muted loop playsinline preload="none" poster="media/evolved.webp" data-src="media/evolved.mp4"
+          aria-label="Evolved: dozens of enemies and gravity wells on the warped grid"></video>
+      </figure>
+      <div class="mode-text">
+        <h3>Evolved</h3>
+        <p class="stats readout">4 lives <span>·</span> 3 bombs <span>·</span> no clock</p>
+        <p>The open-ended game: enemies keep coming and keep getting tougher until your last life is gone.
+        100,000 points earns an extra life and bomb, and each later bonus comes at ten times the score of the one
+        before.</p>
+      </div>
+    </article>
+
+    <article class="mode" id="pacifism">
+      <figure class="mode-clip">
+        <video class="clip" muted loop playsinline preload="none" poster="media/pacifism.webp" data-src="media/pacifism.mp4"
+          aria-label="Pacifism: the unarmed ship flying through gates as swarms of grunts close in"></video>
+      </figure>
+      <div class="mode-text">
+        <h3>Pacifism</h3>
+        <p class="stats readout">no weapons <span>·</span> no bombs <span>·</span> 1 ship</p>
+        <p>Your ship can't shoot. Fly through a gate, between its two ends, and it blasts the enemies around it;
+        touch the ends and you're dead. Crossing gates in quick succession scores more. Only grunts and gates
+        appear, in growing swarms, and one hit ends the game.</p>
+      </div>
+    </article>
+
+    <article class="mode" id="waves">
+      <figure class="mode-clip">
+        <video class="clip" muted loop playsinline preload="none" poster="media/waves.webp" data-src="media/waves.mp4"
+          aria-label="Waves: lines of orange rockets crossing the arena while the ship shoots a way through"></video>
+      </figure>
+      <div class="mode-text">
+        <h3>Waves</h3>
+        <p class="stats readout">1 ship <span>·</span> no bombs <span>·</span> rocket walls</p>
+        <p>Rockets cross the arena in formation, horizontally and vertically, as half walls or full ones. Shoot a
+        gap and slip through. Other enemies join in as the game goes on, and the walls come faster and faster.
+        One hit ends the game.</p>
+      </div>
+    </article>
+
+    <article class="mode" id="sequence">
+      <figure class="mode-clip">
+        <video class="clip" muted loop playsinline preload="none" poster="media/sequence.webp" data-src="media/sequence.mp4"
+          aria-label="Sequence: one of the twenty set levels, hundreds of green grunts closing in on the ship"></video>
+      </figure>
+      <div class="mode-text">
+        <h3>Sequence</h3>
+        <p class="stats readout">20 levels <span>·</span> 0:30 each <span>·</span> 3 bombs</p>
+        <p>Twenty set levels with thirty seconds each. Clear a level's enemies to move on. Running out of time or
+        losing a life moves you on too, with no second try. The game ends after level 20 or with your last life.
+        Learning the patterns is the key.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap section" id="multiplayer" aria-labelledby="mp-h">
+    <article class="mode mode-wide">
+      <figure class="mode-clip">
+        <video class="clip" muted loop playsinline preload="none" poster="media/multiplayer.webp" data-src="media/multiplayer.mp4"
+          aria-label="A three-player versus game of Deadline, the scores of all three at the top"></video>
+      </figure>
+      <div class="mode-text">
+        <h2 id="mp-h">Up to four players, one screen</h2>
+        <p class="stats readout">2-4 pads <span>·</span> versus or co-op</p>
+        <p>Every mode you've unlocked can be played with friends on the same machine, each with a pad (the
+        keyboard counts as the first). Play together with one shared score and one pool of lives, or against
+        each other, alone or in teams of two.</p>
+        <p>Two players can share a ship as pilot and copilot: one flies, the other fires. In versus games
+        power-ups appear: speed, a shield, a magnet for geoms, a bomb and a five-way spread, and two that slow or
+        freeze the other teams.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap section" id="shots" aria-labelledby="shots-h">
+    <h2 id="shots-h">Screenshots</h2>
+    <ul class="gallery">
+      <li><a href="media/deadline-still.webp"><img src="media/deadline-thumb.webp" width="640" height="360" loading="lazy" alt="Deadline: the grid glowing red under dozens of enemies, two seconds left on the clock"></a></li>
+      <li><a href="media/king-still.webp"><img src="media/king-thumb.webp" width="640" height="360" loading="lazy" alt="King: three zones on the grid, orange snakes and purple spinners around them, the score at 795,695"></a></li>
+      <li><a href="media/evolved-still.webp"><img src="media/evolved-thumb.webp" width="640" height="360" loading="lazy" alt="Evolved: snakes coiling across a glowing yellow grid warped by explosions"></a></li>
+      <li><a href="media/pacifism-still.webp"><img src="media/pacifism-thumb.webp" width="640" height="360" loading="lazy" alt="Pacifism: a long swarm of blue grunts chasing the ship past orange-ended gates"></a></li>
+      <li><a href="media/waves-still.webp"><img src="media/waves-thumb.webp" width="640" height="360" loading="lazy" alt="Waves: a full wall and a half wall of orange rockets crossing the arena"></a></li>
+      <li><a href="media/sequence-still.webp"><img src="media/sequence-thumb.webp" width="640" height="360" loading="lazy" alt="Sequence: green grunts filling both sides of the arena, the level timer at 28 seconds"></a></li>
+    </ul>
+  </section>
+
+  <section class="wrap section" id="faithful" aria-labelledby="faithful-h">
+    <h2 id="faithful-h">Faithful by construction</h2>
+    <div class="cols">
+      <div class="col">
+        <p>geow2 is a new program written from a reading of the original executable. Enemy behaviour, spawning,
+        scoring, timings, the grid and the menus follow the original's code, and the source cites the functions it
+        follows. It was checked against recordings of the original running in an emulator.</p>
+        <p>The few deliberate differences, such as local score boards in place of Xbox Live, are each listed with
+        the evidence in <a href="https://github.com/techknight/geow2/blob/main/DIFFERENCES.md">DIFFERENCES.md</a>.</p>
+      </div>
+      <ul class="features">
+        <li><span class="readout">any resolution</span> and an exact 1280x720 option</li>
+        <li><span class="readout">60 steps/s</span> one simulation step per frame on a 60 Hz display, as on the console</li>
+        <li><span class="readout">local boards</span> the best scores for each mode, kept on your machine</li>
+        <li><span class="readout">12 achievements</span> unlocked locally, with the original icons</li>
+        <li><span class="readout">5 languages</span> English, German, French, Spanish and Italian</li>
+        <li><span class="readout">pad or keyboard</span> sticks and bomb buttons can be swapped in the options</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap section" id="deck" aria-labelledby="deck-h">
+    <h2 id="deck-h">Steam Deck</h2>
+    <p class="section-lede">Both builds run on the Deck: the Linux build natively, or the Windows build under
+    Proton. Make the data folder on a PC, copy the game folder with it to the Deck's home folder, and add
+    <code>geow2</code> to Steam as a non-Steam game. On the OLED model, set the refresh rate to 60 Hz for the
+    smoothest picture. <a href="https://github.com/techknight/geow2#steam-deck">Step by step in the README</a>.</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-links" aria-label="Project">
+      <a href="https://github.com/techknight/geow2">Source on GitHub</a>
+      <a href="https://github.com/techknight/geow2/releases">Releases</a>
+      <a href="https://github.com/techknight/geow2/blob/main/CHANGELOG.md">Changelog</a>
+      <a href="https://github.com/techknight/geow2/issues">Report a bug</a>
+      <a href="https://github.com/techknight/geow2/blob/main/LICENSE">MIT licence</a>
+    </nav>
+    <p class="legal">geow2 is an independent, unofficial reimplementation. It is not affiliated with, endorsed or
+    sponsored by Activision, Bizarre Creations or Microsoft. Geometry Wars is a trademark of Activision Publishing,
+    Inc.; Xbox, Xbox 360 and Xbox Live are trademarks of Microsoft Corporation. Their names are used here only to
+    say what geow2 works with. geow2 contains none of the game's code, graphics, sound or text, and cannot be played
+    without your own legally purchased copy. Please don't share game files or ask for them.</p>
+    <p class="legal">The screenshots and clips on this page show geow2 running with data from the game.
+    Type: Alpha Prota, MatrixType and Rijusans by <a href="https://ggbot.itch.io">GGBotNet</a>
+    (<a href="https://github.com/techknight/geow2-site/blob/main/NOTICE.md">licences</a>).</p>
+    <p class="legal readout" id="site-version">geow2.com</p>
+  </div>
+</footer>
+
+<script src="js/site.js" defer></script>
+</body>
+</html>
