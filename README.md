@@ -1,7 +1,8 @@
 # geow2-site
 
 The website for [geow2](https://github.com/techknight/geow2), served at
-<https://geow2.com> by GitHub Pages.
+<https://geow2.com> by GitHub Pages. By Derek Quenneville
+([techknight.com](https://techknight.com)).
 
 It is one hand-written page: `index.html`, `css/site.css` and `js/site.js`,
 with no build step. The download button reads the latest release from the

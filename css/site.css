@@ -283,7 +283,7 @@ code {
 .features { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .features li {
   display: grid;
-  grid-template-columns: 11.5em minmax(0, 1fr);
+  grid-template-columns: 13.5em minmax(0, 1fr);
   gap: 12px;
   align-items: baseline;
   padding-bottom: 12px;
@@ -295,6 +295,7 @@ code {
 
 .footer { border-top: 1px solid var(--edge); background: rgba(3, 4, 11, 0.9); }
 .footer-inner { padding-block: 32px 48px; display: grid; gap: 16px; }
+.byline { font-family: var(--display); font-size: var(--step-1); color: var(--core); }
 .footer-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
 .legal { font-size: var(--step--1); color: var(--dim); max-width: 90ch; }
 #site-version { color: var(--edge); }
