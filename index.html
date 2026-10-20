@@ -43,6 +43,7 @@
         </a>
         <ul class="dl-others" id="dl-others">
           <li><a href="https://github.com/techknight/geow2/releases/latest">Windows, macOS and Linux downloads</a></li>
+          <li><a href="flatpak/">Steam Deck and Linux: install with Flatpak</a></li>
         </ul>
       </div>
       <p class="needs">Needs your own copy of the Xbox Live Arcade game. geow2 contains no game data.</p>
@@ -60,28 +61,29 @@
   <section class="wrap section" id="setup" aria-labelledby="setup-h">
     <h2 id="setup-h">Bring your own copy</h2>
     <p class="section-lede">geow2 is only the program. The graphics, sound and text come from your own copy of
-    the game (title ID 584108FF, the <code>LIVE</code> package from an Xbox 360). A tool in the
-    download turns it into the data folder the game reads, once.</p>
+    the game (title ID 584108FF, the <code>LIVE</code> package from an Xbox 360). The first time it starts, geow2
+    turns it into the data folder it reads.</p>
     <ol class="steps">
       <li class="step">
-        <h3>Unpack the download</h3>
-        <p>Download the archive for your system and unpack it anywhere. Install
-        <a href="https://ffmpeg.org/download.html">FFmpeg</a> too: the tool uses it to decode the game's sound
-        (on a Mac, <code>brew install ffmpeg</code>).</p>
+        <h3>Get geow2</h3>
+        <p>On Windows and macOS, download the archive for your system and unpack it anywhere, and install
+        <a href="https://ffmpeg.org/download.html">FFmpeg</a>, which decodes the game's sound during setup (on a
+        Mac, <code>brew install ffmpeg</code>). On the Steam Deck and Linux, <a href="flatpak/">install it with
+        Flatpak</a>, which brings its own.</p>
       </li>
       <li class="step">
-        <h3>Make the data folder</h3>
-        <p>In a terminal, in the folder you unpacked:</p>
-        <div class="cmd"><code id="cmd-unpack">geow2-extract unpack &lt;your package or extracted folder&gt; data</code><button type="button" class="copy" data-copy="cmd-unpack">Copy</button></div>
-        <div class="cmd"><code id="cmd-verify">geow2-extract verify data</code><button type="button" class="copy" data-copy="cmd-verify">Copy</button></div>
-        <p class="small">On macOS and Linux, write <code>./geow2-extract</code>. The tool accepts only the
-        release the port was made from and checks every file. The folder works on every system, so you can make
-        it once and copy it.</p>
+        <h3>Point it at your copy</h3>
+        <p>Start geow2 (<code>geow2.exe</code> on Windows, <code>geow2.app</code> on macOS). It asks for the
+        <code>LIVE</code> package or a folder of its extracted files, accepts only the release the port was made
+        from, checks every file and makes the data folder, once. It works with a gamepad.</p>
+        <p class="small">Or in a terminal, in the folder you unpacked:
+        <code>geow2-extract unpack &lt;your package or extracted folder&gt; data</code>. The folder works on every
+        system, so you can make it once and copy it.</p>
       </li>
       <li class="step">
         <h3>Play</h3>
-        <p>Start <code>geow2</code> (<code>geow2.exe</code> on Windows, <code>geow2.app</code> on macOS). A gamepad
-        works out of the box; so does the keyboard: WASD to move, arrow keys to fire, Space for a bomb.</p>
+        <p>A gamepad works out of the box; so does the keyboard: WASD to move, arrow keys to fire, Space for a
+        bomb.</p>
       </li>
     </ol>
     <p class="more"><a href="https://github.com/techknight/geow2#getting-started">Full instructions in the README</a></p>
@@ -241,9 +243,12 @@
 
   <section class="wrap section" id="deck" aria-labelledby="deck-h">
     <h2 id="deck-h">Steam Deck</h2>
-    <p class="section-lede">The Deck runs the Linux build natively, or the Windows build under Proton. Make the data folder on a PC, copy the game folder with it to the Deck's home folder, and add
-    <code>geow2</code> to Steam as a non-Steam game. On the OLED model, set the refresh rate to 60 Hz for the
-    smoothest picture. <a href="https://github.com/techknight/geow2#steam-deck">Step by step in the README</a>.</p>
+    <p class="section-lede">geow2 runs natively on the Deck. Install it with Flatpak in Desktop Mode, start it once
+    to set it up from your copy of the game on a USB stick or microSD card, then add it to Steam and play in Game
+    Mode. Updates come through Discover. On the OLED model, set the refresh rate to 60 Hz for the smoothest
+    picture.</p>
+    <p><a class="btn btn-primary btn-inline" href="flatpak/"><span class="btn-label">Install on the Steam Deck</span>
+    <span class="readout">Flatpak, from geow2.com</span></a></p>
   </section>
 </main>
 

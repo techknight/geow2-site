@@ -5,6 +5,10 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  # Picks up a new geow2 release's Flatpak repository within a day, should a
+  # run by hand after the release be forgotten.
+  schedule:
+    - cron: "17 6 * * *"
 
 permissions:
   contents: read
@@ -25,6 +29,18 @@ jobs:
 
       - name: Check links, sizes and line endings
         run: python tools/check.py --out _site
+
+      # https://geow2.com/flatpak/repo/: the signed OSTree repository that
+      # geow2's release workflow attaches to each release.
+      - name: Flatpak repository from the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo techknight/geow2 --pattern '*-flatpak-repo.tar.gz' --dir "$RUNNER_TEMP"
+          mkdir -p _site/flatpak/repo
+          tar xzf "$RUNNER_TEMP"/*-flatpak-repo.tar.gz -C _site/flatpak/repo
+          test -f _site/flatpak/repo/summary
+          du -sh _site/flatpak/repo
 
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

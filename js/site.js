@@ -49,9 +49,15 @@
       .filter((p) => p.asset);
     if (!assets.length) return;
     const mine = detectPlatform();
-    const first = assets.find((p) => p.id === mine);
+    // Linux (the Steam Deck among it): the Flatpak first, the archive below.
+    const flatpak = mine === "linux" && (release.assets || []).some((a) => /-flatpak-repo\.tar\.gz$/.test(a.name));
+    const first = flatpak ? null : assets.find((p) => p.id === mine);
     const rest = assets.filter((p) => p !== first);
-    if (first) {
+    if (flatpak) {
+      primary.href = "flatpak/";
+      label.textContent = "Install with Flatpak";
+      meta.textContent = version + " · Steam Deck and Linux";
+    } else if (first) {
       primary.href = first.asset.browser_download_url;
       label.textContent = "Download for " + first.label;
       meta.textContent = version + " · " + megabytes(first.asset.size);
@@ -70,6 +76,14 @@
       size.className = "readout";
       size.textContent = megabytes(p.asset.size);
       a.append(size);
+      li.append(a);
+      others.append(li);
+    }
+    if (!flatpak) {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "flatpak/";
+      a.textContent = "Steam Deck and Linux: install with Flatpak";
       li.append(a);
       others.append(li);
     }

@@ -16,9 +16,9 @@ import shutil
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-PUBLISH = ["index.html", "CNAME", "css", "js", "fonts", "img", "media", "scores"]
-PAGES = ["index.html", "scores/index.html"]
-TEXT = (".html", ".css", ".js", ".md", ".py", ".yml", ".txt")
+PUBLISH = ["index.html", "CNAME", "css", "js", "fonts", "img", "media", "scores", "flatpak"]
+PAGES = ["index.html", "scores/index.html", "flatpak/index.html"]
+TEXT = (".html", ".css", ".js", ".md", ".py", ".yml", ".txt", ".flatpakref", ".flatpakrepo")
 MB = 1024 * 1024
 
 
