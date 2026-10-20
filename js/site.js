@@ -34,6 +34,7 @@
     const label = document.getElementById("dl-label");
     const meta = document.getElementById("dl-meta");
     const others = document.getElementById("dl-others");
+    if (!primary || !label || !meta || !others) return;  // a page without the download button
     let release;
     try {
       const r = await fetch("https://api.github.com/repos/techknight/geow2/releases/latest",

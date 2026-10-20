@@ -2,7 +2,7 @@
 
     python tools/check.py [--out _site]
 
-- every src/href/poster/data-src in index.html, and every url() in the CSS,
+- every src/href/poster/data-src in the pages, and every url() in the CSS,
   that points inside the site exists;
 - clips are at most 8 MB, other files at most 2 MB, media at most 64 MB in
   all;
@@ -16,7 +16,8 @@ import shutil
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-PUBLISH = ["index.html", "CNAME", "css", "js", "fonts", "img", "media"]
+PUBLISH = ["index.html", "CNAME", "css", "js", "fonts", "img", "media", "scores"]
+PAGES = ["index.html", "scores/index.html"]
 TEXT = (".html", ".css", ".js", ".md", ".py", ".yml", ".txt")
 MB = 1024 * 1024
 
@@ -31,14 +32,22 @@ def main():
     args = ap.parse_args()
     errors = []
 
-    with open(os.path.join(ROOT, "index.html"), encoding="utf-8") as f:
-        page = f.read()
-    refs = re.findall(r'(?:src|href|poster|data-src)="([^"]+)"', page)
+    # Each page's references, relative to the page's folder ("scores/" is a
+    # folder with its index.html).
+    refs = []
+    for page_path in PAGES:
+        with open(os.path.join(ROOT, page_path), encoding="utf-8") as f:
+            page = f.read()
+        base = os.path.dirname(page_path)
+        refs += [(base, r) for r in re.findall(r'(?:src|href|poster|data-src)="([^"]+)"', page)]
     with open(os.path.join(ROOT, "css", "site.css"), encoding="utf-8") as f:
-        refs += [os.path.join("css", u) for u in re.findall(r'url\("([^"]+)"\)', f.read())]
-    for ref in refs:
-        if local(ref) and not os.path.exists(os.path.normpath(os.path.join(ROOT, ref.split("#")[0]))):
-            errors.append("missing: " + ref)
+        refs += [("css", u) for u in re.findall(r'url\("([^"]+)"\)', f.read())]
+    for base, ref in refs:
+        target = os.path.normpath(os.path.join(ROOT, base, ref.split("#")[0]))
+        if ref.split("#")[0].endswith("/"):
+            target = os.path.join(target, "index.html")
+        if local(ref) and not os.path.exists(target):
+            errors.append("missing: %s (in %s)" % (ref, base or "index.html"))
 
     media_total = 0
     for base, dirs, files in os.walk(ROOT):

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Online scores · geow2</title>
+<meta name="description" content="Share geow2 high scores, unlocked modes and achievements between your devices and with your friends, through a score server your group runs for free on Cloudflare.">
+<meta name="author" content="Derek Quenneville">
+<meta name="theme-color" content="#03040b">
+<link rel="canonical" href="https://geow2.com/scores/">
+<link rel="icon" href="../img/favicon.ico" sizes="any">
+<link rel="icon" href="../img/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../img/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geow2.com/scores/">
+<meta property="og:title" content="geow2 online scores">
+<meta property="og:description" content="Your high scores, unlocks and achievements on every device, and your friends' boards in the game.">
+<meta property="og:image" content="https://geow2.com/img/social.png">
+<meta property="og:image:alt" content="The geow2 icon, a glowing G2 on a warped blue grid, beside the name geow2">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../fonts/alpha-prota/AlphaProta-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/rijusans/Rijusans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+<canvas id="grid" aria-hidden="true"></canvas>
+
+<header class="hero hero-page">
+  <div class="wrap">
+    <p class="crumb"><a href="../">geow2</a></p>
+    <h1 class="page-title">Online scores</h1>
+    <p class="tagline">Your high scores on every device, and your friends' on your boards</p>
+    <p class="lede">With a score server for your group, the games you play on your PC and your Steam Deck
+    add up to one set of high scores, unlocked modes and achievements. The leaderboards in the game show the
+    whole group, with the Friends and My score views of the original. Each group runs its own server, free on
+    Cloudflare; nobody else sees your scores.</p>
+    <p class="needs">Online scores need geow2 1.1 or later. They're optional: without a server, the game works
+    as before.</p>
+  </div>
+</header>
+
+<main>
+  <section class="wrap section" id="how" aria-labelledby="how-h">
+    <h2 id="how-h">How it works</h2>
+    <ol class="steps">
+      <li class="step">
+        <h3>One server per group</h3>
+        <p>Someone in the group deploys the server, a small program on Cloudflare's free plan, and sends
+        invite links to the others.</p>
+      </li>
+      <li class="step">
+        <h3>Names on your phone</h3>
+        <p>Each person opens their invite link on their phone and picks the name the boards will show. No
+        email, no password.</p>
+      </li>
+      <li class="step">
+        <h3>Pair each device</h3>
+        <p>The game shows a QR code; scan it with that phone and confirm. Pair your PC and your Deck to the same
+        name and they share everything.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap section" id="host" aria-labelledby="host-h">
+    <h2 id="host-h">Set up a server for your group</h2>
+    <p class="section-lede">This takes about five minutes, once, for the whole group. You need a free
+    <a href="https://dash.cloudflare.com/sign-up">Cloudflare account</a> and a GitHub account.</p>
+    <ol class="numbered">
+      <li>
+        <p>Click <b>Deploy to Cloudflare</b>. Cloudflare copies the server's code to your GitHub account,
+        creates its database and puts it online.</p>
+        <p><a class="btn btn-primary btn-inline" href="https://deploy.workers.cloudflare.com/?url=https://github.com/techknight/geow2-scores"><span class="btn-label">Deploy to Cloudflare</span></a></p>
+      </li>
+      <li>
+        <p>When it asks, set two values:</p>
+        <ul class="facts">
+          <li><span class="readout">ADMIN_SECRET</span> the password for your server's admin page. Pick a long
+          one and keep it somewhere safe.</li>
+          <li><span class="readout">GROUP_NAME</span> your group's name, shown in the game and on the server's
+          pages.</li>
+        </ul>
+      </li>
+      <li>
+        <p>When the deploy is done, Cloudflare shows your server's address, something like
+        <code>https://geow2-scores.your-name.workers.dev</code>. Open that address followed by
+        <code>/admin</code> and sign in with the admin secret.</p>
+      </li>
+      <li>
+        <p>Make an invite link and send it to your friends. Open it yourself too, on your phone, to join
+        your own group.</p>
+      </li>
+    </ol>
+    <p class="more">The server's code, and how to run it without the button:
+    <a href="https://github.com/techknight/geow2-scores">github.com/techknight/geow2-scores</a></p>
+  </section>
+
+  <section class="wrap section" id="join" aria-labelledby="join-h">
+    <h2 id="join-h">Join and pair your devices</h2>
+    <ol class="numbered">
+      <li><p>Open the invite link you were sent, on your phone, and choose your name.</p></li>
+      <li><p>In geow2, open <b>Help and options</b>, then <b>Online scores</b>. Choose the server line and enter
+      the address you were given. On a Steam Deck, <b>STEAM + X</b> shows the keyboard.</p></li>
+      <li><p>Choose <b>Pair this device</b>. Scan the QR code with your phone, or open your page on the server
+      and type the code, then confirm. The game picks it up within seconds.</p></li>
+      <li><p>Do the same on every device you play on.</p></li>
+    </ol>
+    <p class="section-lede">From then on the game syncs by itself: when it starts, after each game and every
+    few minutes in the menus. In the leaderboards, <b>X</b> switches between Friends (the group), My score
+    (the group, at your row) and Overall (your own best games). Your name replaces "Player 1".</p>
+    <p class="small">From a terminal: <code>geow2 --online-pair &lt;server address&gt;</code> pairs a device
+    (it prints the code to confirm), and <code>geow2 --online-sync</code> syncs.</p>
+  </section>
+
+  <section class="wrap section" id="kept" aria-labelledby="kept-h">
+    <h2 id="kept-h">What the server keeps</h2>
+    <div class="cols">
+      <ul class="features">
+        <li><span class="readout">players</span> the name each person chose</li>
+        <li><span class="readout">devices</span> the name the game gives each one</li>
+        <li><span class="readout">games</span> mode, score, multiplier and date of each finished game</li>
+        <li><span class="readout">progress</span> unlocked modes, unlock progress, achievements</li>
+      </ul>
+      <div class="col">
+        <p>No email addresses, no passwords, nothing from the game itself. Device and phone tokens are stored
+        only as hashes. The admin can rename or remove players, unpair devices and delete scores.</p>
+        <p>Scores are trusted as they come from the game: it's for friends, not a public leaderboard.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="merge" aria-labelledby="merge-h">
+    <h2 id="merge-h">Without a server</h2>
+    <p class="section-lede">To combine two devices once, copy one device's profile folder to the other and
+    run <code>geow2 --merge-profile &lt;that folder&gt;</code>. Its games, unlocked modes and achievements are
+    added; merging the same folder again changes nothing. The profile folders are listed in the
+    <a href="https://github.com/techknight/geow2#playing">README</a>.</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p class="byline">geow2 is made by Derek Quenneville. More projects at
+    <a href="https://techknight.com">techknight.com</a>.</p>
+    <nav class="footer-links" aria-label="Project">
+      <a href="../">geow2.com</a>
+      <a href="https://github.com/techknight/geow2">Source on GitHub</a>
+      <a href="https://github.com/techknight/geow2-scores">Score server</a>
+      <a href="https://github.com/techknight/geow2/issues">Report a bug</a>
+    </nav>
+    <p class="legal">geow2 is an independent, unofficial reimplementation. It is not affiliated with, endorsed or
+    sponsored by Activision, Bizarre Creations or Microsoft. Geometry Wars is a trademark of Activision Publishing,
+    Inc.; Xbox, Xbox 360 and Xbox Live are trademarks of Microsoft Corporation.</p>
+  </div>
+</footer>
+
+<script src="../js/site.js" defer></script>
+</body>
+</html>
